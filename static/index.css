@@ -1,0 +1,300 @@
+*{
+    margin: 0;
+}
+
+.app-bg{
+    background-image: url('./healthAibgImage.jpg');
+    background-size: cover;
+     height: 100vh;
+}
+
+.healthAi-heading{
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.form-container{
+    box-shadow: 0px 4px 16px 0px #12022f;
+    height: 380px;
+    width: 350px;
+    border-radius: 15px;
+    margin: 30px;
+    padding: 30px;
+    border: 2px solid red;
+}
+.enter-details-heading{
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.input-type{
+    width: 90%;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-radius: 6px;
+    border: 1px solid #bfbfbf;
+    outline: none;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.input-label{
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    width: 100%;
+}
+
+.option-type{
+    margin-top: 5px;
+    width: 96%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #bfbfbf;
+    border-radius: 6px;
+}
+
+.sumbit-button{
+    background-color: #0275d8;
+    color: white;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-width: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+}
+
+.button-container{
+    margin-top: 30px;
+    text-align: center;
+}
+
+.bottom-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.chatbot-heading{
+    color: white;
+}
+
+.chatbot-container{
+    box-shadow: 0px 4px 16px 0px #12022f;
+    height: 380px;
+    width: 350px;
+    border-radius: 15px;
+    margin: 30px;
+    padding: 30px;
+    border: 2px solid red;
+}
+
+.upload-button{
+    color: white;
+    background-color: #0275d8;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    border-width: 0;
+    cursor: pointer;
+    outline: none;
+    margin-top: 30px;
+}
+
+.upload-x-ray-heading{
+    color: white;
+    font-size: 28px;
+}
+
+.upload-x-ray-container{
+    text-align: center;
+    box-shadow: 0px 4px 16px 0px #12022f;
+    height: 200px;
+    width: 350px;
+    border-radius: 15px;
+    margin: 30px;
+    padding: 30px;
+    border: 3px solid red;
+}
+
+.msg-element{
+    color: white;
+    font-family: cursive;
+}
+
+.input-file{
+    color: white;
+    font-size: 14px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding-left: 80px;
+}
+/* addituional */
+
+
+#user-message {
+    margin-bottom: 10px;
+  }
+  #nav-bar{
+    position:sticky;
+  }
+  #chat-container {
+    width: 100%;
+    background-image: linear-gradient(to right, rgba(237, 155, 125, 0.789), rgba(237, 155, 125, 0.258));
+    padding: 5px;
+    border: 2px solid tomato;
+    border-radius: 10px;
+    margin-top: 2%;
+    height: 600px;
+    border: 1px solid #ccc;
+    overflow-y:scroll; /* Add overflow-y property to enable vertical scrolling */
+  }
+  
+  /* Adjust the width of the user input */
+  #user-message {
+    flex-grow: 1;
+    padding: 2%;
+    border-radius: 20px;
+    border: 2px solid tomato;
+    width: 50%; /* Adjust the width as needed */
+    margin-bottom: 10px;
+  }
+  
+  header {
+  width:auto;
+  margin:-1%;
+  }
+  
+  #main-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-top: 2%;
+  }
+  
+  div table {
+  border-collapse: collapse;
+  width: 100%;
+  height: 600px;
+  }
+  div th{
+  border: 2px solid rgb(244, 239, 239);
+  background-color: rgba(199, 99, 81, 0.967); ;
+  font-size: 14px;
+  color:white;
+  text-align:center;
+  }
+  div td {
+  border: 2px solid rgb(244, 239, 239);
+  background-color: rgba(255, 99, 71, 0.433); ;
+  font-size: 14px;
+  font-weight: 600;
+  color:rgb(9, 9, 9);
+  text-align:center;
+  }
+  
+  .container-fluid a{
+  border-radius: 20px;
+  }
+  .container-fluid a:hover{
+  background-color:rgb(199, 26, 26);
+  border-radius: 20px;
+  }
+  button[type="submit"] {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #f7efe5;
+  color: rgb(213, 106, 67);
+  border: 2px solid tomato;
+  font-size: 1rem;
+  margin-top: -10%;
+  font-weight: bold;
+  }
+  
+  button[type="submit"]:hover {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: tomato;
+  color: rgb(253, 250, 249);
+  border: 2px solid tomato;
+  font-size: 1rem;
+  margin-top: -10%;
+  font-weight: bold;
+  }
+  
+  .user-message{
+    font-family: "Nunito", sans-serif;
+    background-color: rgba(216, 46, 12, 0.542);
+    /* light color */
+    text-align: left;
+    /* changed text align to left */
+    padding: 10px;
+    /* added padding */
+    color: white;
+    width: fit-content;
+    float: right;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-right: 5%;
+    align-items: center;
+    font-style: italic;
+    border-radius: 20px 15px 0px 20px;
+    word-wrap: break-word; /* Add word-wrap property to wrap long messages */
+  }
+  
+  .bot-message {
+    font-family: "Nunito", sans-serif;
+    background-color: rgba(224, 142, 126, 0.647);
+    /* light color */
+    text-align: left;
+    /* changed text align to left */
+    padding: 10px;
+    /* added padding */
+    color: white;
+    float:left;
+    width: fit-content;
+    margin-left: 5%;
+    margin-top: 5%;
+    margin-right: 5%;
+    margin-bottom: 2%;
+    align-items: center;
+    font-style: italic;
+    border-radius: 20px 15px 0px 20px;
+    word-wrap: break-word; /* Add word-wrap property to wrap long messages */
+  }
+  
+  .user-message img,
+  .bot-message img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  @media only screen and (min-device-width: 320px) and (max-device-width: 400px) {
+  #chat-window {
+  width: 90%;
+  }
+  }
+  .main-title {
+  font-size: 1.5rem;
+  text-align: center;
+  font-family: cursive;
+  margin-bottom: 0.5rem;
+  color: white;
+  margin-top: 2%;
+  background-color: rgba(255, 99, 71, 0.619);
+  font-weight: bold;
+  border-radius: 5px;
+  }

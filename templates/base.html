@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cifar - 10</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #444;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 5px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #imagePreview {
+            width: 30%;
+            max-height: 30%;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #imageContainer {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Welcome to Cifar-10</h1>
+    </header>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </nav>
+
+    <form id="formContainer" action="/upload" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="xray">Cifar Image (Drag and drop here)</label>
+            <div class="image-preview" id="imagePreview">
+              <!-- <img src="" alt="Image Preview"> -->
+            </div>
+            <input type="file" class="form-control-file" id="xray" name="image"
+              onchange="previewImage(event)">
+          </div>
+          <button type="submit" class="btn btn-primary" onclick="submitForm()">Submit</button>
+    </form>
+
+    <div id="imageContainer">
+        {% if message %}
+            <h2>{{ message }}</h2>
+        {% endif %}
+        {% if Pred %}
+            <p>Prediction: It's a {{ Pred }}</p>
+        {% endif %}
+        {% if error %}
+            <p> {{ error }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function toggleForm() {
+
+        var formContainer = document.getElementById("formContainer");
+        var button = document.querySelector("button");
+
+        if (formContainer.style.display === "none") {
+        formContainer.style.display = "block";
+        button.innerText = "Close Form";
+        } else {
+        formContainer.style.display = "none";
+        button.innerText = "Open Form";
+        }
+        }
+
+        function submitForm() {
+        // Add your code here to handle form submission
+        // alert("Form submitted successfully!");
+        toggleForm();
+        removeTable();
+        // Hide the form after submission
+        }
+
+        function previewImage(event) {
+        var reader = new FileReader();
+        var imagePreview = document.getElementById("imagePreview");
+        var image = imagePreview.querySelector("img");
+
+        reader.onload = function () {
+        image.src = reader.result;
+        };
+
+        reader.readAsDataURL(event.target.files[0]);
+        }
+</script>
+
+</body>
+</html>

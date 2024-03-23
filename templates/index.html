@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../static/index.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 400;
+            font-size: 100%;
+            background: #F1F1F1;
+        }
+
+        *, html {
+            --primaryGradient: linear-gradient(93.12deg, #581B98 0.52%, #9C1DE7 100%);
+            --secondaryGradient: linear-gradient(268.91deg, #581B98 -2.14%, #9C1DE7 99.69%);
+            --primaryBoxShadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+            --secondaryBoxShadow: 0px -10px 15px rgba(0, 0, 0, 0.1);
+            --primary: #581B98;
+        }
+        header {
+            background-color: #940B92;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex; /* Display navigation links horizontally */
+        }
+        nav li {
+            margin-right: 20px; /* Add spacing between list items */
+        }
+        nav li:last-child {
+            margin-right: 0; /* Remove margin from last list item */
+        }
+        form {
+            max-width: 400px;
+            margin: 2rem 2rem 2rem 2rem; /* Adjusted margin to move form to the left */
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #DA0C81;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"],[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+        }
+        .forms {
+        position: absolute;
+        left: 1%;
+        top: 50%; /* Adjust as needed */
+        transform: translateY(-80%);
+        /* Additional styling */
+        width: 300px;
+        height: 500px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        padding: 10px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        /* CSS for the radio buttons */
+        .gender {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .gender input[type="radio"] {
+            display: none;
+        }
+        .gender label {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .gender label:before {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        .gender input[type="radio"]:checked + label:before {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+        /* CHATBOX
+        =============== */
+        .chatbox {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+        }
+
+        /* CONTENT IS CLOSE */
+        .chatbox__support {
+            display: flex;
+            flex-direction: column;
+            background: #eee;
+            width: 300px;
+            height: 350px;
+            z-index: -123456;
+            opacity: 0;
+            transition: all .5s ease-in-out;
+        }
+
+        /* CONTENT ISOPEN */
+        .chatbox--active {
+            transform: translateY(-40px);
+            z-index: 123456;
+            opacity: 1;
+
+        }
+
+        /* BUTTON */
+        .chatbox__button {
+            text-align: right;
+        }
+
+        .send__button {
+            padding: 6px;
+            background: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+
+        /* HEADER */
+        .chatbox__header {
+            position: sticky;
+            top: 0;
+            background: orange;
+        }
+
+        /* MESSAGES */
+        .chatbox__messages {
+            margin-top: auto;
+            display: flex;
+            overflow-y: scroll;
+            flex-direction: column-reverse;
+        }
+
+        .messages__item {
+            background: orange;
+            max-width: 60.6%;
+            width: fit-content;
+        }
+
+        .messages__item--operator {
+            margin-left: auto;
+        }
+
+        .messages__item--visitor {
+            margin-right: auto;
+        }
+
+        /* FOOTER */
+        .chatbox__footer {
+            position: sticky;
+            bottom: 0;
+        }
+
+        .chatbox__support {
+            background: #f9f9f9;
+            height: 450px;
+            width: 350px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        /* HEADER */
+        .chatbox__header {
+            background: var(--primaryGradient);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 20px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            box-shadow: var(--primaryBoxShadow);
+        }
+
+        .chatbox__image--header {
+            margin-right: 10px;
+        }
+
+        .chatbox__heading--header {
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .chatbox__description--header {
+            font-size: .9rem;
+            color: white;
+        }
+
+        /* Messages */
+        .chatbox__messages {
+            padding: 0 20px;
+        }
+
+        .messages__item {
+            margin-top: 10px;
+            background: #E0E0E0;
+            padding: 8px 12px;
+            max-width: 70%;
+        }
+
+        .messages__item--visitor,
+        .messages__item--typing {
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .messages__item--operator {
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+            background: var(--primary);
+            color: white;
+        }
+
+        /* FOOTER */
+        .chatbox__footer {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 20px;
+            background: var(--secondaryGradient);
+            box-shadow: var(--secondaryBoxShadow);
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .chatbox__footer input {
+            width: 80%;
+            border: none;
+            padding: 10px 10px;
+            border-radius: 30px;
+            text-align: left;
+        }
+
+        .chatbox__send--footer {
+            color: white;
+        }
+
+        .chatbox__button button,
+        .chatbox__button button:focus,
+        .chatbox__button button:visited {
+            padding: 10px;
+            background: white;
+            border: none;
+            outline: none;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+            border-bottom-left-radius: 50px;
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .loader-shell {
+            background-color: #E0E0E0;
+            width: 40px;
+            height: 35px;
+            padding-left: 9px;
+            padding-top: 4px;
+            border-top-right-radius: 20px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+        .loader {
+        /* the colors */
+        --c1: #ffffff;
+        --c2: #ffffff;
+        --c3: #ffffff;
+        --c4: #ffffff;
+        /**/
+        
+        width: 25px; /* control the size */
+        aspect-ratio: 8/5;
+        --_g: no-repeat radial-gradient(#000 68%,#0000 71%);
+        -webkit-mask: var(--_g),var(--_g),var(--_g);
+        -webkit-mask-size: 25% 40%;
+        background: 
+            conic-gradient(var(--c1) 50%,var(--c2) 0) no-repeat,
+            conic-gradient(var(--c3) 50%,var(--c4) 0) no-repeat;
+            margin-top: 5px;
+        background-size: 200% 50%;
+        animation: 
+            back 4s infinite steps(1),
+            load 2s infinite;
+        }
+
+        @keyframes load {
+        0%    {-webkit-mask-position: 0% 0%  ,50% 0%  ,100% 0%  }
+        16.67%{-webkit-mask-position: 0% 100%,50% 0%  ,100% 0%  }
+        33.33%{-webkit-mask-position: 0% 100%,50% 100%,100% 0%  }
+        50%   {-webkit-mask-position: 0% 100%,50% 100%,100% 100%}
+        66.67%{-webkit-mask-position: 0% 0%  ,50% 100%,100% 100%}
+        83.33%{-webkit-mask-position: 0% 0%  ,50% 0%  ,100% 100%}
+        100%  {-webkit-mask-position: 0% 0%  ,50% 0%  ,100% 0%  }
+        }
+        @keyframes back {
+        0%,
+        100%{background-position: 0%   0%,0%   100%}
+        25% {background-position: 100% 0%,0%   100%}
+        50% {background-position: 100% 0%,100% 100%}
+        75% {background-position: 0%   0%,100% 100%}
+        }
+    </style>
+</head>
+<body>
+  <div class="app-bg">
+    <nav class="navbar-container">
+        <h1 class="healthAi-heading">Health AI </h1>
+    </nav>
+    <div class="bottom-container">
+        <div>
+            <form id="formContainer" action="/upload" method="POST" enctype="multipart/form-data">
+                <h1 class="enter-details-heading">Please Enter Your Details</h1>
+                <label for="name" class="input-label"> NAME</label>
+                <input class="input-type" id="name" name="name" type="text" />
+            
+                <label for="age" class="input-label"> AGE</label>
+                <input class="input-type" id="age" name="age" type="text" />
+            
+                <label class="input-label" for="gender">Gender:</label>
+                <select class="option-type" id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            
+                <h1 class="upload-x-ray-heading">Upload X-ray</h1>
+                <input class="input-file" type="file" id="image" name="image" onchange="previewImage(event)"/> 
+
+                <div class="image-preview" id="imagePreview">
+                    <img src="" alt="Image Preview" width="200" height="200">
+                </div>
+            
+                <button class="submit-button" type="submit">Submit</button>
+            </form>
+            
+        </div>
+
+        <div id="imageContainer">
+            {% if image_url %}
+                <h2 style="color:#f0f0f0;">Uploaded Image:</h2>
+                <img src="{{image_url}}" alt="Uploaded Image" width="150" height="150">
+            {% endif %}
+
+            {% if path %}
+                <h2 style="color:#f0f0f0;">Processed Image:</h2>
+                <img src="{{ path }}" alt="Processed Image" width="150" height="150">
+            {% endif %}
+
+            {% if error %}
+                <p>{{error}}</p>
+            {% endif %}
+        </div>
+
+        <div class="chatbot-container">
+            <h1 class="chatbot-heading"> CHATBOT</h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="chatbox">
+            <div class="chatbox__support">
+                <div class="chatbox__header">
+                    <div class="chatbox__image--header">
+                        <img src="../static/Graident Ai Robot.jpg" style="width: 70px; height: 50px;background-color: #ffffff; border-radius: 20px;">
+                    </div>
+                    <div class="chatbox__content--header">
+                        <h4 class="chatbox__heading--header">Chat support</h4>
+                        <p class="chatbox__description--header">Powered by HealthAi</p>
+                    </div>
+                </div>
+                <div class="chatbox__messages">
+                    <div></div>
+                </div>
+                <div class="chatbox__footer">
+                    <input type="text" placeholder="Write a message...">
+                    <button class="chatbox__send--footer send__button">Send</button>
+                </div>
+            </div>
+            <div class="chatbox__button">
+                <button><img src="../static/Graident Ai Robot.jpg" style="width: 50px;height: 50px;"></button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
+    <script src="../static/script.js"> </script>
+    <script>
+        function toggleForm() {
+
+            var formContainer = document.getElementById("formContainer");
+            var button = document.querySelector("button");
+
+            if (formContainer.style.display === "none") {
+            formContainer.style.display = "block";
+            button.innerText = "Close Form";
+            } else {
+            formContainer.style.display = "none";
+            button.innerText = "Open Form";
+            }
+        }
+
+        function submitForm() {
+        toggleForm();
+        removeTable();
+        }
+        function previewImage(event) {
+        var reader = new FileReader();
+        var imagePreview = document.getElementById("imagePreview");
+        var image = imagePreview.querySelector("img");
+
+        reader.onload = function () {
+        image.src = reader.result;
+        };
+
+        reader.readAsDataURL(event.target.files[0]);
+        }
+
+
+    </script>
+    
+  </div>
+  
+</body>
+</html>

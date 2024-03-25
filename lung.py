@@ -1,32 +1,86 @@
-# sudo apt update
-# sudo apt install -y libgl1-mesa-glx libglib2.0-0
-import tensorflow as tf
-from tensorflow.keras.models import load_model 
-import keras
-import cv2 
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torchvision.transforms as transforms
+from PIL import Image
 import numpy as np
-def lung(path):
-  img = cv2.imread(path)
-  d = {}
-  # tb_model = load_model("TB.keras")
-  # shape = tb_model.layers[0].input_shape[1:-1]
-  # print(shape)
-  # tb_img = cv2.resize(img,(28,28))
-  # tb_img = np.expand_dims(tb_img, axis=0)
-  # d["Tuberculosis"] = tb_model.predict(tb_img)
+class CnnModel(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.network = nn.Sequential(
+            nn.Conv2d(3, 100, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(100, 150, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2), 
 
-  pneumonia_model = load_model("PN.h5")
-  shape = pneumonia_model.layers[0].input_shape[1:-1]
-  pn_img = cv2.resize(img,(150,150))
-  print(on_img.shape,"..................")
-  pn_img = np.expand_dims(pn_img, axis=0)
-  d["Pneumonia"] = pneumonia_model.predict(pn_img)
+            nn.Conv2d(150, 200, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(200, 200, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2), 
 
-  covid_model = load_model("covid_sequential  (1).h5")
-  shape = covid_model.layers[0].input_shape[1:-1]
-  pn_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-  cd_img = cv2.resize(pn_img,shape)
-  cd_img = np.expand_dims(cd_img, axis=0)
-  d["Covid"] = covid_model.predict(cd_img)
-  return d
-lung("COVID-1.png")
+            nn.Conv2d(200, 250, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(250, 250, kernel_size=3, stride=1, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2), 
+
+            nn.Flatten(), 
+            nn.Linear(36000, 64),  
+            nn.ReLU(),            
+            nn.Linear(64, 32),  
+            nn.ReLU(),            
+            nn.Linear(32, 16),           
+            nn.ReLU(),
+            nn.Linear(16, 8),
+            nn.ReLU(),
+            nn.Dropout(0.25),
+            nn.Linear(8, 4)
+        )
+        
+    def forward(self, xb):
+        return self.network(xb)
+
+# Instantiate the model
+loaded_model = CnnModel()
+
+# Move the model to CPU
+device = torch.device('cpu')
+loaded_model.load_state_dict(torch.load('lung.pt', map_location=device))
+loaded_model.eval()
+
+# Define transformation
+train_transform = transforms.Compose([
+    transforms.Resize((100, 100)),  # Resize the image
+    transforms.ToTensor(),          # Convert the PIL image to a PyTorch tensor
+])
+
+def test_lung(image_path):
+    image = Image.open(image_path)
+    if image.mode != 'RGB':
+        image = image.convert('RGB')
+
+    transformed_image = train_transform(image)
+    numpy_array = transformed_image.permute(1, 2, 0).numpy()
+    pil_image = Image.fromarray((numpy_array * 255).astype(np.uint8))
+    pil_image.save('static/output_image.jpg')
+    transformed_image = transformed_image.unsqueeze(0)  # Add batch dimension
+
+    # Forward pass
+    with torch.no_grad():
+        output = loaded_model(transformed_image)
+
+    # Compute softmax probabilities
+    probabilities = F.softmax(output, dim=1)
+
+    # Convert output probabilities to predicted class
+    _, predicted = torch.max(probabilities, 1)
+
+    # Print the predicted class and probabilities for each class
+    class_names = ['PNEUMONIA', 'NORMAL', 'COVID19', 'TURBERCULOSIS']
+    d = {}
+    d["xray"] = "lung"
+    for i, prob in enumerate(probabilities.squeeze().tolist()):
+        d[class_names[i]] = prob 
+    return d

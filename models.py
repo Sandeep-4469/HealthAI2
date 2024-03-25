@@ -14,7 +14,8 @@ def download_model_from_url(url, output_path):
         print("Failed to download model. Status code:", response.status_code)
 
 # Example usage:
-models = ["https://storage.googleapis.com/sandeep_personal/Bone.pt", "https://storage.googleapis.com/sandeep_personal/TB.keras", "https://storage.googleapis.com/sandeep_personal/best_model_pn.keras", "https://storage.googleapis.com/sandeep_personal/covid_sequential%20.h5","https://storage.googleapis.com/sandeep_personal/PN.h5","https://storage.googleapis.com/sandeep_personal/retina%20(1).pt","https://storage.googleapis.com/sandeep_personal/Model_XRAY_final.h5"]
-output_path = ['Bone.pt', "TB.keras","PN.keras","covid.h5","PN.h5","retina.pt","x_ray.h5"]
-i = -1
-download_model_from_url(models[i], output_path[i])
+models = ["https://storage.googleapis.com/sandeep_personal/Bone.pt","https://storage.googleapis.com/sandeep_personal/xray.pt","https://storage.googleapis.com/sandeep_personal/retina%20(1).pt","https://storage.googleapis.com/sandeep_personal/lung_model_torchpt.pt"]
+output_path = ['Bone.pt',"xray.pt","retina.pt","lung.pt" ]
+
+for i in range(len(models)):
+    download_model_from_url(models[i], output_path[i])

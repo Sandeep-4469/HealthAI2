@@ -1,11 +1,15 @@
 *{
     margin: 0;
 }
+body{
+    min-height: 150vh;
+}
+
 
 .app-bg{
     background-image: url('./healthAibgImage.jpg');
     background-size: cover;
-     height: 100vh;
+     
 }
 
 .healthAi-heading{

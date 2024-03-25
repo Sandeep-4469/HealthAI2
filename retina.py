@@ -1,8 +1,8 @@
 from PIL import Image 
 import torch
 from torchvision import transforms
-
-def retina(path):
+import numpy as np
+def test_retina(path):
     image = Image.open(path)
     model = torch.load("retina.pt", map_location=torch.device('cpu'))  # Load model on CPU
     model.eval()
@@ -13,7 +13,11 @@ def retina(path):
     ])
     if image.mode != 'RGB':
         image = image.convert('RGB')
-    img = my_transform(image).unsqueeze(0)
+    img = my_transform(image)
+    numpy_array = img.permute(1, 2, 0).numpy()
+    pil_image = Image.fromarray((numpy_array * 255).astype(np.uint8))
+    pil_image.save('static/output_image.jpg')
+    img = img.unsqueeze(0)
     device = torch.device("cpu")  # Set device to CPU
     model = model.to(device)
     img = img.to(device)
@@ -22,6 +26,8 @@ def retina(path):
         print(score)
     min_index = torch.argmin(score)
     print(min_index)
-    return min_index.item()  # Return the index as a Python scalar
+    d = {}
+    d["xray"] = "retina"
+    d["stage"] = min_index.item()
+    return d
 
-print(retina("10003_left.jpeg"))

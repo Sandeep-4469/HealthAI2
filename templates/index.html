@@ -247,6 +247,14 @@
             color: white;
         }
 
+        .total-bg-container{
+            display: flex;
+            flex-direction: row;
+            
+            justify-content: center;
+            align-items: center;
+        }
+
         /* Messages */
         .chatbox__messages {
             padding: 0 20px;
@@ -272,6 +280,9 @@
             border-bottom-left-radius: 20px;
             background: var(--primary);
             color: white;
+        }
+        #imageContainer{
+            margin-left: 130px;
         }
 
         /* FOOTER */
@@ -313,6 +324,7 @@
             box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
             cursor: pointer;
         }
+       
 
         .loader-shell {
             background-color: #E0E0E0;
@@ -370,6 +382,7 @@
     <nav class="navbar-container">
         <h1 class="healthAi-heading">Health AI </h1>
     </nav>
+    <div class ="total-bg-container">
     <div class="bottom-container">
         <div>
             <form id="formContainer" action="/upload" method="POST" enctype="multipart/form-data">
@@ -415,9 +428,7 @@
             {% endif %}
         </div>
 
-        <div class="chatbot-container">
-            <h1 class="chatbot-heading"> CHATBOT</h1>
-        </div>
+       
     </div>
     <div class="container">
         <div class="chatbox">
@@ -444,7 +455,7 @@
             </div>
         </div>
     </div>
-    
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.min.js"></script>
     <script src="../static/script.js"> </script>
     <script>

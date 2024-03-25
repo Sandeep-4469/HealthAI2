@@ -14,16 +14,19 @@ def plot_prediction(image, prediction, output_path):
     boxes = prediction[0]['boxes'].numpy()
     scores = prediction[0]['scores'].numpy()
     labels = prediction[0]['labels'].numpy()
-
+    c = 0
     for box, score, label in zip(boxes, scores,labels):
         if score > 0.6:  # Adjust the threshold based on your needs
             box = [round(coord, 2) for coord in box]
             draw.rectangle([box[0], box[1], box[2], box[3]], outline='red',width=10)  # Draw bounding box
             draw.text((box[0], box[1]), f'{label}', fill='red',font_size=60)  # Add text
+            c+=1
 
     # Save the image with bounding boxes
     pil_image.save(output_path)
-    return pil_image
+    if c==0:
+        return "no fracture"
+    return classes[label]
 
 def bone_main(image_path):
     img = Image.open(image_path)
@@ -58,7 +61,12 @@ def bone_main(image_path):
     # Move predictions to CPU if they are on GPU
     predictions = [{k: v.to('cpu') for k, v in t.items()} for t in predictions]
     output_image_path = 'static/output_image.jpg'
-    plot_prediction(input_image.squeeze(), predictions, output_image_path)
+    x = plot_prediction(input_image.squeeze(), predictions, output_image_path)
     print(f"Image with bounding boxes saved to {output_image_path}")
+    d ={}
+    d["xray"] = "bone"
+    d["fracture"] = x
+    return d
+
 
 

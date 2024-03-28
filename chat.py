@@ -1,7 +1,7 @@
 import openai
 import json
 
-openai.api_key = "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"
+openai.api_key = ""
 
 def get_data():
     with open("static/data.json", "r") as json_file:

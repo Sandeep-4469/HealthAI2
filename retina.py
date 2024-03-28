@@ -24,10 +24,11 @@ def test_retina(path):
     with torch.no_grad():
         score = model(img)
         print(score)
+    labels = ["NO DR","MIND DR","MODERATE DR","SEVERE DR","PROLIFERATE DR"]
     min_index = torch.argmin(score)
     print(min_index)
     d = {}
     d["xray"] = "retina"
-    d["stage"] = min_index.item()
+    d["diabetic retinopathy"] = labels[min_index.item()]
     return d
 

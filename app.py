@@ -20,22 +20,18 @@ from retina import test_retina
 # from chat import collect_messages_text
 import dotenv
 app = FastAPI()
-app.mount("/static", StaticFiles(directory = "static"), name = "static")
 data = {}
+app.mount("/static", StaticFiles(directory = "static"), name = "static")
 UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 context = []
 templates = Jinja2Templates(directory="templates")
-data = {}
-def get_dict():
-    return data
 class Message(BaseModel):
     content: str
 @app.get("/")
 def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
-
 @app.post("/chat")
 async def chat(message:Message):
     user_message = message.content
@@ -63,19 +59,19 @@ async def upload_image(request: Request, name: str = Form(...), age: str = Form(
             d = test_retina(image_path)
         data.update(d)
         context.append({"role": "system", "content": f"""Consider you are a doctorbot.
-The details of the patient are as follows and/
-The user provides an x-ray and the details from the x-ray are as follows:
-{str(data)}.
-Now act as a chatbot and answer questions asked by the user.
-First, give the user the X-ray report, then ask the user whether he/she has any questions.
-Answer the questions wisely in short form.
-Use the name of the user to interact.
-Ask for BMI and blood glucose levels in case of diabetes.
-If no BMI is known, ask for height and weight and calculate.
-Use BMI and blood glucose levels before providing the X-ray report only for Diabetic Retinopathy.
-If the user asks questions out of context - Simply warn him.
-Now act as a chatbot and answer questions asked by the user.
-First of all, greet the user with his name and show the result given in the x-ray data."""})
+        The details of the patient are as follows and/
+        The user provides an x-ray and the details from the x-ray are as follows:
+        {str(data)}.
+        Now act as a chatbot and answer questions asked by the user.
+        First, give the user the X-ray report, then ask the user whether he/she has any questions.
+        Answer the questions wisely in short form.
+        Use the name of the user to interact.
+        Ask for BMI and blood glucose levels in case of diabetes.
+        If no BMI is known, ask for height and weight and calculate.
+        Use BMI and blood glucose levels before providing the X-ray report only for Diabetic Retinopathy.
+        If the user asks questions out of context - Simply warn him.
+        Now act as a chatbot and answer questions asked by the user.
+        First of all, greet the user with his name and show the result given in the x-ray data."""})
         
         # Return a response with the processed image (and any other data)
         return templates.TemplateResponse("index.html", {"request": request, "image_url":f'{image_path}',"path": '/static/output_image.jpg'})

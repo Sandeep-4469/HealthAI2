@@ -43,7 +43,7 @@ class CnnModel(nn.Module):
         return self.network(xb)
 
 # Instantiate the model
-loaded_model = CnnModel()
+loaded_model = CnnModel() #object
 
 # Move the model to CPU
 device = torch.device('cpu')
@@ -62,7 +62,7 @@ def test_lung(image_path):
         image = image.convert('RGB')
 
     transformed_image = train_transform(image)
-    numpy_array = transformed_image.permute(1, 2, 0).numpy()
+    numpy_array = transformed_image.permute(1, 2, 0).numpy() # to numpy array
     pil_image = Image.fromarray((numpy_array * 255).astype(np.uint8))
     pil_image.save('static/output_image.jpg')
     transformed_image = transformed_image.unsqueeze(0)  # Add batch dimension
